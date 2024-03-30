@@ -61,6 +61,7 @@ function App() {
   return (
     <div className="bg-bgColor h-screen">
       <div className="grid grid-cols lg:grid-cols-[400px_minmax(500px,_1fr)] justify-center items-center text-center relative">
+        
         <div className="lg:mx-8 lg:mt-8 ">
           <Title title="Learn to code by watching others" />
           <Description

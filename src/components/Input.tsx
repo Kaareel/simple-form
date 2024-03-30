@@ -28,7 +28,7 @@ function Input(props: Props) {
       {props.isInput && props.id === "lastName" && props.value === "" && (
         <p className="text-red-500 my-2">Last Name cannot be empty</p>
       )}
-      {props.isInput && props.id === "email" && (props.value === "" || props.isEmail) &&(
+      {props.isInput && props.id === "email" && (props.value === "" || !props.isEmail) &&(
         <p className="text-red-500 my-2">Email cannot be empty</p>
       )}
       {props.isInput && props.id === "password" && props.value === "" && (
