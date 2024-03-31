@@ -29,7 +29,7 @@ function Input(props: Props) {
         <p className="text-red-500 my-2">Last Name cannot be empty</p>
       )}
       {props.isInput && props.id === "email" && (props.value === "" || !props.isEmail) &&(
-        <p className="text-red-500 my-2">Email cannot be empty</p>
+        <p className="text-red-500 my-2">Looks like this is not an email</p>
       )}
       {props.isInput && props.id === "password" && props.value === "" && (
         <p className="text-red-500 my-2">Password cannot be empty</p>

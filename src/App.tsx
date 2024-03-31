@@ -52,17 +52,16 @@ function App() {
     } else if (validEmail(email) === true) {
       setIsInput(false);
       setIsEmail(true);
-    } else {
-      setIsInput(false);
-      setIsEmail(false);
     }
   };
 
   return (
-    <div className="bg-bgColor h-screen">
-      <div className="grid grid-cols lg:grid-cols-[400px_minmax(500px,_1fr)] justify-center items-center text-center relative">
-        
-        <div className="lg:mx-8 lg:mt-8 ">
+    <div className="bg-bgColor h-screen relative">
+      <Image 
+      src="/bg-intro-desktop.png" 
+      srcSet="/bg-intro-desktop.png x1, /bg-intro-mobile.png 2"/>
+      <div className="flex flex-cols justify-center items-center text-center relative z-10">
+        <div className="mx-8 mt-8 w-1/4">
           <Title title="Learn to code by watching others" />
           <Description
             description="See how experienced developers solve problems in real-time.
@@ -70,9 +69,11 @@ function App() {
               developers think is invaluable."
           />
         </div>
-        <div className="flex flex-col justify-center items-center m-auto">
+        <div className="flex flex-col justify-center items-center mx-10 mt-8 w-1/2">
             <div className="bg-bgColor w-90">
-              <Trial text="Try it free 7 days then $20/mo. thereafter" />
+              <Trial
+              segment="Try it free 7 days "
+              text="then $20/mo. thereafter"/>
             </div>
             <div className="bg-white pt-[18px] px-2 flex flex-col justify-center items-center text-center rounded-[5px] w-90"> 
             <Input
