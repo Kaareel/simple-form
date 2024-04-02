@@ -2,23 +2,18 @@ import Button from "./components/Button";
 import Description from "./components/Description";
 import Trial from "./components/Trial";
 import Image from "./components/Image";
-//import input from "./components/input";
+import Input from "./components/Input";
 import Title from "./components/Title";
 import Terms from "./components/Terms";
+import Icon from "./components/Icon";
 import { useState } from "react";
 
 function App() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [isEmail, setIsEmail] = useState(true);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState({
-    name: false,
-    lastName: false,
-    email: false,
-    password: false,
-  });
+  const [error, setError] = useState<{ [key: string]: string }>({});
 
   const validEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,51 +31,64 @@ function App() {
   const handleChangeEmail = (event: any) => {
     const value = event.target.value;
     setEmail(value);
-    setIsEmail(validEmail(value));
   };
-  console.log("email: ", email);
-  console.log("isEmail: ", isEmail);
-  console.log("validEmail: ", validEmail(email));
+
   const handleChangePassword = (event: any) => {
     const value = event.target.value;
     setPassword(value);
   };
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  function validate() {
+    const newError: { [key: string]: string } = {
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+    };
     if (!name) {
-      setError({ ...error, name: true });
-      return;
+      newError.name = "Name is required";
+    } else {
+      newError.name = "";
     }
     if (!lastName) {
-      setError({ ...error, lastName: true });
-      return;
+      newError.lastName = "LastName is required";
+    } else {
+      newError.lastName = "";
     }
-    if (!email && isEmail === true) {
-      setError({ ...error, email: true });
-      setIsEmail(true);
-      return;
+    if (!email) {
+      newError.email = "Email is required";
+    } else if (!validEmail(email)) {
+      newError.email = "Email is invalid";
+    } else {
+      newError.email = "";
     }
     if (!password) {
-      setError({ ...error, password: true });
+      newError.password = "Password is required";
+    } else if (password.length < 8) {
+      newError.password = "password must be least 8 characters";
+    } else {
+      newError.password = "";
+    }
+
+    return newError;
+  }
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    const errors = validate();
+    setError(errors);
+    if (Object.values(errors).length > 0) {
       return;
     }
-    setError({
-      name: false,
-      lastName: false,
-      email: false,
-      password: false,
-    });
   };
 
   return (
-    <div className="bg-bgColor h-screen relative">
+    <div className="bg-bgColor h-screen relative ">
       <Image
         src="/bg-intro-desktop.png"
         srcSet="/bg-intro-desktop.png x1, /bg-intro-mobile.png 2"
       />
-      <div className="flex flex-cols justify-center items-center text-center relative z-10">
-        <div className="mx-8 mt-8 w-1/4">
+      <div className="flex flex-col lg:flex-row relative ">
+        <div className="lg:mx-[126px] lg:my-[216px] lg:w-1/4  mt-14 mx-8 flex flex-col justify-center items-center">
           <Title title="Learn to code by watching others" />
           <Description
             description="See how experienced developers solve problems in real-time.
@@ -88,8 +96,8 @@ function App() {
               developers think is invaluable."
           />
         </div>
-        <div className="flex flex-col justify-center items-center mx-10 mt-8 w-1/2">
-          <div className="bg-bgColor w-90">
+        <div className="flex flex-col justify-center items-center mx-auto lg:mt-[160px] lg:min-w-[650px]">
+          <div className="bg-bgColor w-90 text-center my-4 mx-8">
             <Trial
               segment="Try it free 7 days "
               text="then $20/mo. thereafter"
@@ -97,65 +105,74 @@ function App() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="bg-white pt-[18px] px-2 flex flex-col justify-center items-center text-center rounded-[5px] w-90"
+            className="bg-white pt-[18px] px-2 flex flex-col justify-center items-center text-center rounded-[5px] w-90 "
+            noValidate
           >
-            <div>
-              <input
+            <div className="w-full relative">
+              <Input
                 type="text"
                 id="name"
                 placeholder="First Name"
                 value={name}
                 onChange={handleChangeName}
-                className={`w-90 p-[16px] mb-1 font-semibold rounded-5 text-black leading-[26px] text-base font-['inherit'] border-2 border-solid focus:outline-none focus:ring-bgColor focus:border-bgColor ${
-                  error.name ? "border-red-500" : "border-gray-500"
-                }`}
+                error={error.name}
               />
+              {error.name && (
+                <span className="text-red-500 text-sm my-2">{error.name}</span>
+              )}
+              {error.name && (<Icon/>)}
             </div>
-            <div>
-              <input
+            <div className="w-full relative">
+              <Input
                 type="text"
                 id="lastName"
                 placeholder="Last Name"
                 value={lastName}
                 onChange={handleChangeLastName}
-                className={`w-90 p-[16px] mb-1 font-semibold rounded-5 text-black leading-[26px] text-base font-['inherit'] border-2 border-solid focus:outline-none focus:ring-bgColor focus:border-bgColor ${
-                  error.lastName ? "border-red-500" : "border-gray-500"
-                }`}
+                error={error.lastName}
               />
+              {error.lastName && (
+                <span className="text-red-500 text-sm">{error.lastName}</span>
+              )}
+              {error.lastName && (<Icon/>)}
             </div>
-            <div>
-              <input
+            <div className="w-full relative">
+              <Input
                 type="email"
                 id="email"
                 placeholder="Email Name"
                 value={email}
                 onChange={handleChangeEmail}
-                className={`w-90 p-[16px] mb-1 font-semibold rounded-5 text-black leading-[26px] text-base font-['inherit'] border-2 border-solid focus:outline-none focus:ring-bgColor focus:border-bgColor ${
-                  error.email ? "border-red-500" : "border-gray-500"
-                }`}
+                error={error.email}
               />
+              {error.email && (
+                <span className="text-red-500 text-sm">{error.email}</span>
+              )}
+              {error.email && (<Icon/>)}
             </div>
-            <div>
-              <input
+            <div className="w-full relative">
+              <Input
                 type="password"
                 id="password"
                 placeholder="Password"
                 value={password}
                 onChange={handleChangePassword}
-                className={`w-90 p-[16px] mb-1 font-semibold rounded-5 text-black leading-[26px] text-base font-['inherit'] border-2 border-solid focus:outline-none focus:ring-bgColor focus:border-bgColor ${
-                  error.password ? "border-red-500" : "border-gray-500"
-                }`}
+                error={error.password}
               />
+              {error.password && (
+                <span className="text-red-500 text-sm">{error.password}</span>
+              )}
+              {error.password && (<Icon/>)}
             </div>
-            <Button
-              type="submit"
-              text="Claim your free trial"
-              onClick={handleSubmit}
-            />
-            <Terms
-              text="By clicking the button, you are agreeing to our"
-              segment="Terms and Services"
-            />
+            <div className="w-full ">
+              <Button type="submit" text="Claim your free trial" />
+              <div className="text-center">
+              <Terms
+                text="By clicking the button, you are agreeing to our"
+                segment="Terms and Services"
+              />
+              </div>
+            </div>
           </form>
         </div>
       </div>

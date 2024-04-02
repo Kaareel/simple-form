@@ -3,7 +3,7 @@ interface Props{
 }
 
 function Description (props: Props){
-    return <p className="text-white m-4 mx-auto font-medium leading-6 w-90">{props.description}</p>
+    return <p className="text-white m-4 lg:text-left text-center font-medium w-90">{props.description}</p>
 }
 
 export default Description
