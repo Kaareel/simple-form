@@ -82,33 +82,33 @@ function App() {
   };
 
   return (
-    <div className="bg-bgColor h-screen relative ">
-      <Image
-        src="/bg-intro-desktop.png"
-        srcSet="/bg-intro-desktop.png x1, /bg-intro-mobile.png 2"
+    <div className="bg-bgColor min-h-screen flex justify-center relative">
+  <Image
+    src="/bg-intro-desktop.png"
+    srcSet="/bg-intro-desktop.png x1, /bg-intro-mobile.png 2"
+  />
+  <div className=" flex flex-col lg:flex-row relative mx-auto lg:justify-between">
+    <div className="lg:mx-8 lg:my-14 lg:w-1/4 mt-8 lg:mt-0 flex flex-col justify-center items-center">
+      <Title title="Learn to code by watching others" />
+      <Description
+        description="See how experienced developers solve problems in real-time.
+          Watching scripted tutorials is great, but understanding how
+          developers think is invaluable."
       />
-      <div className="flex flex-col lg:flex-row relative ">
-        <div className="lg:mx-[126px] lg:my-[216px] lg:w-1/4  mt-14 mx-8 flex flex-col justify-center items-center">
-          <Title title="Learn to code by watching others" />
-          <Description
-            description="See how experienced developers solve problems in real-time.
-              Watching scripted tutorials is great, but understanding how
-              developers think is invaluable."
-          />
-        </div>
-        <div className="flex flex-col justify-center items-center mx-auto lg:mt-[160px] lg:min-w-[650px]">
-          <div className="bg-bgColor w-90 text-center my-4 mx-8">
-            <Trial
-              segment="Try it free 7 days "
-              text="then $20/mo. thereafter"
-            />
-          </div>
+    </div>
+    <div className="flex flex-col justify-center items-center mx-auto lg:w-1/2 lg:max-w-[650px]">
+      <div className="bg-bgColor w-90 text-center my-4 mx-8">
+        <Trial
+          segment="Try it free 7 days "
+          text="then $20/mo. thereafter"
+        />
+      </div>
           <form
             onSubmit={handleSubmit}
             className="bg-white pt-[18px] px-2 flex flex-col justify-center items-center text-center rounded-[5px] w-90 "
             noValidate
           >
-            <div className="w-full relative">
+            <div className={`w-full relative flex flex-col ${error.name ? "mb-0" : "mb-3"}`}>
               <Input
                 type="text"
                 id="name"
@@ -118,11 +118,11 @@ function App() {
                 error={error.name}
               />
               {error.name && (
-                <span className="text-red-500 text-sm my-2">{error.name}</span>
+                <p className="text-red-500 text-sm text-right w-95 mb-2 italic">{error.name}</p>
               )}
               {error.name && (<Icon/>)}
             </div>
-            <div className="w-full relative">
+            <div className={`w-full relative flex flex-col ${error.lastName ? "mb-0" : "mb-3"}`}>
               <Input
                 type="text"
                 id="lastName"
@@ -132,11 +132,11 @@ function App() {
                 error={error.lastName}
               />
               {error.lastName && (
-                <span className="text-red-500 text-sm">{error.lastName}</span>
+                <p className="text-red-500 text-sm text-right w-95 mb-2 italic">{error.lastName}</p>
               )}
               {error.lastName && (<Icon/>)}
             </div>
-            <div className="w-full relative">
+            <div className={`w-full relative flex flex-col ${error.email ? "mb-0" : "mb-3"}`}>
               <Input
                 type="email"
                 id="email"
@@ -146,11 +146,11 @@ function App() {
                 error={error.email}
               />
               {error.email && (
-                <span className="text-red-500 text-sm">{error.email}</span>
+                <p className="text-red-500 text-sm text-right w-95 mb-2 italic">{error.email}</p>
               )}
               {error.email && (<Icon/>)}
             </div>
-            <div className="w-full relative">
+            <div className={`w-full relative flex flex-col ${error.password ? "mb-0" : "mb-3"}`} >
               <Input
                 type="password"
                 id="password"
@@ -160,7 +160,7 @@ function App() {
                 error={error.password}
               />
               {error.password && (
-                <span className="text-red-500 text-sm">{error.password}</span>
+                <p className="text-red-500 text-sm text-right w-95 mb-2 italic">{error.password}</p>
               )}
               {error.password && (<Icon/>)}
             </div>
